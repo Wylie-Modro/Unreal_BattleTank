@@ -3,13 +3,6 @@
 #include "TankPlayerController.h"
 #include "BattleTank.h"
 
-void ATankPlayerController::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-	AimThroughCrosshair();
-}
-
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
 
@@ -24,18 +17,23 @@ void ATankPlayerController::BeginPlay() {
 	UE_LOG(LogTemp, Warning, TEXT("Me Player Controller Begin Play"));
 }
 
+void ATankPlayerController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+
+	AimThroughCrosshair();
+}
+
 ATank* ATankPlayerController::GetControlledTank() const {
 	
 	return Cast<ATank>(GetPawn());
 }
-
 
 void ATankPlayerController::AimThroughCrosshair() {
 	if (!GetControlledTank()) { return; }
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("HitLocation: %s"), *HitLocation.ToString());
+		GetControlledTank()->AimAt(HitLocation);
 	}
 }
 
@@ -47,6 +45,30 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 
 	auto ScreenLocation = FVector2D(ViewportSizeX * ATankPlayerController::CrosshairXLocation, ViewportSizeY * ATankPlayerController::CrosshairYLocation);
 
+	FVector	WorldLookDirection;
+	FVector	WorldCameraLocation;
+
+	DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldCameraLocation, WorldLookDirection);
+	//UE_LOG(LogTemp, Warning, TEXT("WorldLookDirection: %s"), *WorldLookDirection.ToString());
+	GetLookVectorHitLocation(WorldLookDirection, OutHitLocation);
+	
 	return true;
+}
+
+bool ATankPlayerController::GetLookVectorHitLocation(FVector WorldLookDirection, FVector& OutHitLocation) const {
+	FHitResult HitResult;
+	auto StartLocation = PlayerCameraManager->GetCameraLocation();
+		//UE_LOG(LogTemp, Warning, TEXT("StartLocation: %s"), *StartLocation.ToString());
+	auto EndLocation = StartLocation + (WorldLookDirection * LineTraceRange);
+		//UE_LOG(LogTemp, Warning, TEXT("EndLocation: %s"), *EndLocation.ToString());
+
+
+	if (GetWorld()->LineTraceSingleByChannel(HitResult, StartLocation, EndLocation, ECollisionChannel::ECC_Visibility)) {
+		OutHitLocation = HitResult.Location;
+		return true;
+	}
+
+	OutHitLocation = FVector(0);
+	return false;
 }
 

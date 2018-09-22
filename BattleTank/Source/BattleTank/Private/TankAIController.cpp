@@ -25,6 +25,31 @@ void ATankAIController::BeginPlay() {
 	UE_LOG(LogTemp, Warning, TEXT("Me AI Controller Begin Play"));
 }
 
+
+void ATankAIController::Tick(float DeltaTime) {
+	Super::Tick(DeltaTime);
+
+	if (FindPlayerTank()) {
+
+		// Move Towards the Player
+
+		FVector PlayerTankLocation = FindPlayerTank()->GetActorLocation();
+
+		auto AITank = GetAITank();
+
+		AITank->AimAt(PlayerTankLocation);
+
+
+		// Fire if ready
+
+	}
+	
+}
+
+
+
+
+
 ATank* ATankAIController::GetAITank() const {
 
 	return Cast<ATank>(GetPawn());
