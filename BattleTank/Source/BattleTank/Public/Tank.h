@@ -9,6 +9,7 @@
 //Forward Declarations
 class UTankAimingComponent;
 class UTankBarrel;
+class AProjectile;
 
 UCLASS()
 class BATTLETANK_API ATank : public APawn
@@ -38,6 +39,8 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
+	UPROPERTY(EditAnywhere, Category = Firing) TSubclassOf<AProjectile> ProjectileBlueprint;
 	
-	
+	// Local barrel declared here for projectile spawning 
+	UTankBarrel* Barrel = nullptr;
 };
