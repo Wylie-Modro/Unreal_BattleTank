@@ -27,7 +27,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Firing) void Fire();
 
-	UPROPERTY(EditAnywhere, Category = Firing) float LaunchingSpeed = 100000; // 1km/s
+	UPROPERTY(EditDefaultsOnly, Category = Firing) float LaunchingSpeed = 100000; // 1km/s
 
 protected:
 	// Called when the game starts or when spawned
@@ -39,8 +39,13 @@ private:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	UPROPERTY(EditAnywhere, Category = Firing) TSubclassOf<AProjectile> ProjectileBlueprint;
+	UPROPERTY(EditDefaultsOnly, Category = Firing) TSubclassOf<AProjectile> ProjectileBlueprint;
 	
 	// Local barrel declared here for projectile spawning 
 	UTankBarrel* Barrel = nullptr;
+
+	float ReloadTime = 3;
+
+	double LastReloadTime = 0;
+
 };
