@@ -37,11 +37,11 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 		//UE_LOG(LogTemp, Warning, TEXT("%s Aims at %s from barrel %s"), *OurTankName, *HitLocation.ToString(), *BarrelLocation.ToString());
 		//UE_LOG(LogTemp, Warning, TEXT("Firing at %f"), LaunchSpeed);
 		float Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: %s aiming at %s"), Time, *OurTankName, *AimDirection.ToString());
+	//	UE_LOG(LogTemp, Warning, TEXT("%f: %s aiming at %s"), Time, *OurTankName, *AimDirection.ToString());
 	}
 	else {
 		float Time = GetWorld()->GetTimeSeconds();
-		UE_LOG(LogTemp, Warning, TEXT("%f: Can't Find Suggested Projectile Velocity"), Time);
+	//	UE_LOG(LogTemp, Warning, TEXT("%f: Can't Find Suggested Projectile Velocity"), Time);
 	}
 	
 	
