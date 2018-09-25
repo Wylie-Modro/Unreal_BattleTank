@@ -22,6 +22,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	UPROPERTY(EditDefaultsOnly) float CrosshairYLocation = 0.33333f;
 	UPROPERTY(EditDefaultsOnly) float LineTraceRange = 1000000;
 
+
 public:
 	ATank* GetControlledTank() const;
 	

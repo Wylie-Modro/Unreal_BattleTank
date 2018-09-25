@@ -37,3 +37,8 @@ void UTankMovementComponent::IntendMoveLeft(float Throw) {
 	RightTrack->SetThrottle(Throw);
 	//Prevent double spped dude ot due control use
 }
+
+void UTankMovementComponent::RequestDirectMove() {
+
+}
+
