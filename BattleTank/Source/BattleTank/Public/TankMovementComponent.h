@@ -28,6 +28,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = Input) void IntendMoveRight(float Throw);
 	UFUNCTION(BlueprintCallable, Category = Input) void IntendMoveLeft(float Throw);
 	
+	// Called from the pathfinding logic in AI controller
 	virtual void RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) override;
 	
 };

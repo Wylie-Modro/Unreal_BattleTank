@@ -38,7 +38,28 @@ void UTankMovementComponent::IntendMoveLeft(float Throw) {
 	//Prevent double spped dude ot due control use
 }
 
-void UTankMovementComponent::RequestDirectMove() {
+void UTankMovementComponent::RequestDirectMove(const FVector& MoveVelocity, bool bForceMaxSpeed) {
+	
+	auto CurrentAITankForwardVector = GetOwner()->GetActorForwardVector().GetSafeNormal();
+	auto IntendedAITankForwardVector = MoveVelocity.GetSafeNormal();
 
+	auto RelativeThrowGivenVectors = FVector::DotProduct(CurrentAITankForwardVector, IntendedAITankForwardVector);
+	// RelativeThrowGiven the difference of the currentVector of Tank and the desired Vector
+
+	if (RelativeThrowGivenVectors >= 0) {
+		IntendMoveForward(RelativeThrowGivenVectors);
+	}
+	else {
+		IntendMoveBackward(-RelativeThrowGivenVectors);
+	}
+
+	float RelativeRotationGivenVectors = FVector::CrossProduct(CurrentAITankForwardVector, IntendedAITankForwardVector).Z;
+
+	if (RelativeRotationGivenVectors >= 0) {
+		IntendMoveRight(RelativeRotationGivenVectors);
+	}
+	else {
+		IntendMoveLeft(-RelativeRotationGivenVectors);
+	}
 }
 
