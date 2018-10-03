@@ -24,6 +24,7 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 
 
 public:
+	UFUNCTION(BlueprintCallable, Category = Setup)
 	ATank* GetControlledTank() const;
 	
 	virtual void Tick(float DeltaTime) override;
