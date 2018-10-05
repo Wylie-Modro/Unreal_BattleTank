@@ -2,12 +2,21 @@
 
 #include "TankPlayerController.h"
 #include "BattleTank.h"
+#include "TankAimingComponent.h"
 #include "Tank.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
-
+	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ Player Controller BeginPlay"));
 	auto ControlledTank = GetControlledTank();
+
+	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
+	if (ensure(AimingComponent)) {
+		FoundAimingComponent(AimingComponent);
+	} else{
+		UE_LOG(LogTemp, Warning, TEXT("Player Controller cannot find TankAimingComponent in BeginPlay"));
+	}
+
 	if (!ControlledTank) {
 		UE_LOG(LogTemp, Warning, TEXT("PlayController Not Posessing A Tank"));
 	}
@@ -30,10 +39,11 @@ ATank* ATankPlayerController::GetControlledTank() const {
 }
 
 void ATankPlayerController::AimThroughCrosshair() {
-	if (!GetControlledTank()) { return; }
+	if (!ensure(GetControlledTank())) { return; }
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) {
+		UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ AimAt called Player Controller"));
 		GetControlledTank()->AimAt(HitLocation);
 	}
 }

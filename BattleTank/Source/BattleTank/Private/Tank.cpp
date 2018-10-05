@@ -4,7 +4,6 @@
 #include "TankBarrel.h"
 #include "Projectile.h"
 #include "TankAimingComponent.h"
-#include "TankMovementComponent.h"
 
 
 // Sets default values
@@ -12,6 +11,7 @@ ATank::ATank()
 {
  	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = false;
+	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ Tank.cpp ATank()"));
 
 //	TankAimingComponent = CreateDefaultSubobject<UTankAimingComponent>(FName("Aiming Component"));
 	
@@ -20,7 +20,8 @@ ATank::ATank()
 // Called when the game starts or when spawned
 void ATank::BeginPlay()
 {
-	Super::BeginPlay();
+	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ Tank.cpp BeginPlay()"));
+	Super::BeginPlay(); // Needed for BP to run!
 	
 }
 
@@ -33,6 +34,7 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 */
 
 void ATank::AimAt(FVector& HitLocation) {
+	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchingSpeed);
 }
 
@@ -50,10 +52,10 @@ void ATank::SetTurretReference(UTankTurret* TurretToSet) {
 
 
 void ATank::Fire() {
+	if (!ensure(Barrel)) { return; }
 
 	bool isReloaded = (FPlatformTime::Seconds() - LastReloadTime) > ReloadTime;
-
-	if (Barrel && isReloaded) {
+	if (isReloaded) {
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 
 		Projectile->LaunchProjectile(LaunchingSpeed);

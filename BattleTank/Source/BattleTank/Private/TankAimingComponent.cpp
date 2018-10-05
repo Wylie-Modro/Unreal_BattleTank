@@ -12,19 +12,20 @@ UTankAimingComponent::UTankAimingComponent()
 	// off to improve performance if you don't need them.
 	PrimaryComponentTick.bCanEverTick = false; // TODO: Does this really need to tick
 	
+	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ TankAimingComponent.cpp UTankAimingComponent()"));
 
 	// ...
 }
 
 void UTankAimingComponent::Initialise(UTankBarrel* TankBarrelToSet, UTankTurret* TankTurretToSet) {
-	if (!TankBarrelToSet || !TankTurretToSet) { return; }
+	if (!ensure(TankBarrelToSet && TankTurretToSet)) { return; }
 	Barrel = TankBarrelToSet;
 	Turret = TankTurretToSet;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 
 	FVector OutLaunchVelocity; 
 	FVector StartingLocation = Barrel->GetSocketLocation(FName("Projectile"));
@@ -66,7 +67,7 @@ void UTankAimingComponent::SetTurretReference(UTankTurret* TurretToSet) {
 }
 */
 void UTankAimingComponent::MoveBarrelToward(FVector AimDirection) {
-	if (!Barrel) { return; }
+	if (!ensure(Barrel)) { return; }
 	
 	//Work out difference between current barrel rotation and AimDirection
 	auto BarrelRotation = Barrel->GetForwardVector().Rotation();
@@ -83,7 +84,7 @@ void UTankAimingComponent::MoveBarrelToward(FVector AimDirection) {
 
 
 void UTankAimingComponent::MoveTurretToward(FVector AimDirection) {
-	if (!Turret) { return; }
+	if (!ensure(Turret)) { return; }
 
 	//Work out difference between current barrel rotation and AimDirection
 	auto TurretRotation = Turret->GetForwardVector().Rotation();

@@ -3,11 +3,12 @@
 #include "TankAIController.h"
 #include "Tank.h"
 #include "BattleTank.h"
+// Depends on movement component via pathfinding system
 
 void ATankAIController::BeginPlay() {
 	Super::BeginPlay();
 
-	UE_LOG(LogTemp, Warning, TEXT("Me AI Controller Begin Play"));
+	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ AI Controller Begin Play"));
 }
 
 
@@ -24,6 +25,8 @@ void ATankAIController::Tick(float DeltaTime) {
 		// Aim at Player
 		FVector PlayerTankLocation = PlayerTank->GetActorLocation();
 		auto AITank = Cast<ATank>(GetPawn());
+		
+		UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ AimAt called in AI Controller"));
 		AITank->AimAt(PlayerTankLocation);
 
 		// Fire if ready
