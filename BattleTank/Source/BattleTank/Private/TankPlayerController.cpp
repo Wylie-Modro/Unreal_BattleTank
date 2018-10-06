@@ -8,7 +8,9 @@
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
 	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ Player Controller BeginPlay"));
-	auto ControlledTank = GetControlledTank();
+
+	ATank* ControlledTank = GetControlledTank();
+	if (!ensure(ControlledTank)) { return;  }
 
 	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
 	if (ensure(AimingComponent)) {
@@ -16,15 +18,6 @@ void ATankPlayerController::BeginPlay() {
 	} else{
 		UE_LOG(LogTemp, Warning, TEXT("Player Controller cannot find TankAimingComponent in BeginPlay"));
 	}
-
-	if (!ControlledTank) {
-		UE_LOG(LogTemp, Warning, TEXT("PlayController Not Posessing A Tank"));
-	}
-	else {
-		UE_LOG(LogTemp, Warning, TEXT("PlayController Posessing: %s"), *(ControlledTank->GetName()));
-	}
-
-	UE_LOG(LogTemp, Warning, TEXT("Me Player Controller Begin Play"));
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {

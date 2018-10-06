@@ -28,7 +28,7 @@ protected:
 	void FoundAimingComponent(UTankAimingComponent* TankAimCompRef);
 
 public:
-	UFUNCTION(BlueprintCallable, Category = Setup)
+	UFUNCTION(BlueprintCallable, Category = "Setup")
 	ATank* GetControlledTank() const;
 	
 	virtual void Tick(float DeltaTime) override;
