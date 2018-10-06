@@ -36,7 +36,7 @@ void ATankPlayerController::AimThroughCrosshair() {
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) {
-		UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ AimAt called Player Controller"));
+	//	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ AimAt called Player Controller"));
 		GetControlledTank()->AimAt(HitLocation);
 	}
 }

@@ -27,6 +27,7 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Firing) void Fire();
 
+	// Remove once firing is moved to aiming component
 	UPROPERTY(EditDefaultsOnly, Category = Firing) float LaunchingSpeed = 100000; // 1km/s
 
 protected:

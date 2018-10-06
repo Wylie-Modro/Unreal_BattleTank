@@ -22,7 +22,8 @@ void ATank::BeginPlay()
 {
 	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ Tank.cpp BeginPlay()"));
 	Super::BeginPlay(); // Needed for BP to run!
-	
+
+	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 /*

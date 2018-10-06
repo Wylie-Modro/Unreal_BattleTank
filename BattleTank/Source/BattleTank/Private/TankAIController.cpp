@@ -26,7 +26,7 @@ void ATankAIController::Tick(float DeltaTime) {
 		FVector PlayerTankLocation = PlayerTank->GetActorLocation();
 		auto AITank = Cast<ATank>(GetPawn());
 		
-		UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ AimAt called in AI Controller"));
+		//UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ AimAt called in AI Controller"));
 		AITank->AimAt(PlayerTankLocation);
 
 		// Fire if ready
