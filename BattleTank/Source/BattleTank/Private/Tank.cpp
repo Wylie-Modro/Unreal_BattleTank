@@ -3,7 +3,7 @@
 #include "Tank.h"
 #include "TankBarrel.h"
 #include "Projectile.h"
-#include "TankAimingComponent.h"
+//b #include "TankAimingComponent.h"
 
 
 // Sets default values
@@ -23,7 +23,7 @@ void ATank::BeginPlay()
 	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ Tank.cpp BeginPlay()"));
 	Super::BeginPlay(); // Needed for BP to run!
 
-	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
+//b	TankAimingComponent = FindComponentByClass<UTankAimingComponent>();
 }
 
 /*
@@ -34,11 +34,12 @@ void ATank::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 }
 */
 
+/*
 void ATank::AimAt(FVector& HitLocation) {
 	if (!ensure(TankAimingComponent)) { return; }
 	TankAimingComponent->AimAt(HitLocation, LaunchingSpeed);
 }
-
+*/
 
 /*
 void ATank::SetBarrelReference(UTankBarrel* BarrelToSet) {

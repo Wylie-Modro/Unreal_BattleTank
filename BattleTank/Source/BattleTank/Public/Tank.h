@@ -7,7 +7,7 @@
 #include "Tank.generated.h"
 
 //Forward Declarations
-class UTankAimingComponent;
+//b class UTankAimingComponent;
 class UTankBarrel;
 class AProjectile;
 
@@ -20,7 +20,7 @@ public:
 	// Sets default values for this pawn's properties
 	ATank();
 	
-	void AimAt(FVector& HitLocation);
+//b	void AimAt(FVector& HitLocation);
 
 //	UFUNCTION(BlueprintCallable, Category = Setup) void SetBarrelReference(UTankBarrel* BarrelToSet);
 //	UFUNCTION(BlueprintCallable, Category = Setup) void SetTurretReference(UTankTurret* TurretToSet);
@@ -34,8 +34,8 @@ protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
-	UPROPERTY(BlueprintReadOnly)
-	UTankAimingComponent* TankAimingComponent = nullptr;
+//b	UPROPERTY(BlueprintReadOnly)
+//b	UTankAimingComponent* TankAimingComponent = nullptr;
 
 private:	
 	// Called to bind functionality to input

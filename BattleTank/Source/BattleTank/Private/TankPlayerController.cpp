@@ -3,21 +3,16 @@
 #include "TankPlayerController.h"
 #include "BattleTank.h"
 #include "TankAimingComponent.h"
-#include "Tank.h"
+//b #include "Tank.h"
 
 void ATankPlayerController::BeginPlay() {
 	Super::BeginPlay();
+	if (!ensure(GetPawn())) { return; }
 	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ Player Controller BeginPlay"));
 
-	ATank* ControlledTank = GetControlledTank();
-	if (!ensure(ControlledTank)) { return;  }
-
-	auto AimingComponent = ControlledTank->FindComponentByClass<UTankAimingComponent>();
-	if (ensure(AimingComponent)) {
-		FoundAimingComponent(AimingComponent);
-	} else{
-		UE_LOG(LogTemp, Warning, TEXT("Player Controller cannot find TankAimingComponent in BeginPlay"));
-	}
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return;	}
+	FoundAimingComponent(AimingComponent);
 }
 
 void ATankPlayerController::Tick(float DeltaTime) {
@@ -26,18 +21,16 @@ void ATankPlayerController::Tick(float DeltaTime) {
 	AimThroughCrosshair();
 }
 
-ATank* ATankPlayerController::GetControlledTank() const {
-	
-	return Cast<ATank>(GetPawn());
-}
-
 void ATankPlayerController::AimThroughCrosshair() {
-	if (!ensure(GetControlledTank())) { return; }
+	if (!ensure(GetPawn())) { return; }
+	auto AimingComponent = GetPawn()->FindComponentByClass<UTankAimingComponent>();
+	if (!ensure(AimingComponent)) { return;	}
 
 	FVector HitLocation;
 	if (GetSightRayHitLocation(HitLocation)) {
 	//	UE_LOG(LogTemp, Warning, TEXT("BlackIce: C++ AimAt called Player Controller"));
-		GetControlledTank()->AimAt(HitLocation);
+	//GetControlledTank()->AimAt(HitLocation);
+	AimingComponent->AimAt(HitLocation);
 	}
 }
 

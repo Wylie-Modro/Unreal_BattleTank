@@ -31,6 +31,8 @@ private:
 	void MoveBarrelToward(FVector AimDirection);
 	void MoveTurretToward(FVector AimDirection);
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing) float LaunchingSpeed = 100000; // 1km/s
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Locked;
@@ -41,7 +43,8 @@ public:
 
 	UFUNCTION(BlueprintCallable, Category = Setup) void Initialise(UTankBarrel* TankBarrelToSet, UTankTurret* TankTurretToSet);
 
-	void AimAt(FVector HitLocation, float LaunchSpeed);
+	//void AimAt(FVector HitLocation, float LaunchSpeed);
+	void AimAt(FVector HitLocation);
 
 //	void SetBarrelReference(UTankBarrel* BarrelToSet);
 //	void SetTurretReference(UTankTurret* TurretToSet);

@@ -7,7 +7,8 @@
 #include "TankAIController.generated.h"
 
 // Forward Declaration
-class ATank;
+//class ATank;
+class UTankAimingComponent;
 
 UCLASS()
 class BATTLETANK_API ATankAIController : public AAIController
@@ -21,5 +22,4 @@ private:
 	
 	//UPROPERTY(BlueprintCallable) float AcceptanceRadius = 2000;
 	float AcceptanceRadius = 2000;
-	
 };

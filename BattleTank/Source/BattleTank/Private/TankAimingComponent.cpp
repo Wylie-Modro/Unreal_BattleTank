@@ -23,7 +23,8 @@ void UTankAimingComponent::Initialise(UTankBarrel* TankBarrelToSet, UTankTurret*
 	Turret = TankTurretToSet;
 }
 
-void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
+//void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
+void UTankAimingComponent::AimAt(FVector HitLocation) {
 	
 	if (!ensure(Barrel)) { return; }
 
@@ -31,7 +32,7 @@ void UTankAimingComponent::AimAt(FVector HitLocation, float LaunchSpeed) {
 	FVector StartingLocation = Barrel->GetSocketLocation(FName("Projectile"));
 
 
-	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartingLocation, HitLocation, LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace)) {
+	if (UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartingLocation, HitLocation, LaunchingSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace)) {
 		// Default values must be present above to prevent bug
 		auto AimDirection = OutLaunchVelocity.GetSafeNormal();
 		//auto TankName = GetOwner()->GetName();
