@@ -7,7 +7,6 @@
 #include "TankPlayerController.generated.h"
 
 //Forward Declaration
-//b class ATank;
 class UTankAimingComponent;
 
 UCLASS()
@@ -29,8 +28,6 @@ protected:
 
 public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
-//b	ATank* GetControlledTank() const;
-//	UTankAimingComponent* defTankAimingComponent;
 	
 	virtual void Tick(float DeltaTime) override;
 	
