@@ -27,10 +27,7 @@ protected:
 	void FoundAimingComponent(UTankAimingComponent* TankAimCompRef);
 
 public:
-	UFUNCTION(BlueprintCallable, Category = "Setup")
-	
 	virtual void Tick(float DeltaTime) override;
-	
 	virtual void BeginPlay() override;
 	
 };

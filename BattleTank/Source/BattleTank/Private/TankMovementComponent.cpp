@@ -5,6 +5,7 @@
 
 void UTankMovementComponent::Initialise(UTankTracks* LeftTrackToSet, UTankTracks* RightTrackToSet) {
 	if (!ensure(LeftTrackToSet && RightTrackToSet)) { return; }
+	//UE_LOG(LogTemp, Error, TEXT("Have left and right track"));
 	LeftTrack = LeftTrackToSet;
 	RightTrack = RightTrackToSet;
 	
