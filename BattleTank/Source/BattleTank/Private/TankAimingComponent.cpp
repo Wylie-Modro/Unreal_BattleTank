@@ -28,7 +28,10 @@ void UTankAimingComponent::Initialise(UTankBarrel* TankBarrelToSet, UTankTurret*
 }
 
 void UTankAimingComponent::TickComponent(float sDeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) { 
-	if ((FPlatformTime::Seconds() - LastReloadTime) < ReloadTime) {
+	if (AmmoAmount <= 0) {
+		FiringState = EFiringState::OutOfAmmo;
+	}
+	else if ((FPlatformTime::Seconds() - LastReloadTime) < ReloadTime) {
 		FiringState = EFiringState::Reloading;
 	}
 	else if (BarrelIsMoving()) {
@@ -37,6 +40,10 @@ void UTankAimingComponent::TickComponent(float sDeltaTime, enum ELevelTick TickT
 	else {
 		FiringState = EFiringState::Locked;
 	}
+}
+
+EFiringState UTankAimingComponent::GetFiringState() const {
+	return FiringState;
 }
 
 void UTankAimingComponent::AimAt(FVector HitLocation) {
@@ -83,16 +90,24 @@ void UTankAimingComponent::MoveTurretToward() {
 	auto AimDirectionRotation = AimDirection.Rotation();
 	auto DeltaRotation = AimDirectionRotation - TurretRotation;
 
-	Turret->RotateTurret(DeltaRotation.Yaw);
+	if (FMath::Abs(DeltaRotation.Yaw) < 180) {
+		Turret->RotateTurret(DeltaRotation.Yaw);
+	}
+	else {
+		Turret->RotateTurret(-DeltaRotation.Yaw);
+	}
 }
 
 void UTankAimingComponent::Fire() {
 	if (!ensure(Barrel)) { return; }
 
-	if (FiringState != EFiringState::Reloading) {
+	auto entityName = GetOwner()->GetName();
+	if (FiringState == EFiringState::Aiming || FiringState == EFiringState::Locked) {
 		auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
 		if (!ensure(Projectile)) { return; }
 		Projectile->LaunchProjectile(LaunchingSpeed);
+
+		AmmoAmount--;
 		LastReloadTime = FPlatformTime::Seconds();
 	}
 }
@@ -101,4 +116,8 @@ bool UTankAimingComponent::BarrelIsMoving() {
 	if (!ensure(Barrel)) { return false; }
 	auto AimNForwardEql = Barrel->GetForwardVector().Equals(AimDirection , 0.01f);
 	return !AimNForwardEql;
+}
+
+int UTankAimingComponent::GetCurrentAmmoAmount() const {
+	return AmmoAmount;
 }

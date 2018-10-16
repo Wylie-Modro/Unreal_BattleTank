@@ -29,7 +29,9 @@ void ATankAIController::Tick(float DeltaTime) {
 
 		// Fire if ready
 		//TODO: Dont Fire every frame
-		AimingComponent->Fire();
+		if (AimingComponent->GetFiringState() == EFiringState::Locked) {
+			AimingComponent->Fire();
+		}
 	
 }
 

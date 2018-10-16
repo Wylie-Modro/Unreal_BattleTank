@@ -26,8 +26,9 @@ void ATankPlayerController::AimThroughCrosshair() {
 	if (!ensure(AimingComponent)) { return;	}
 
 	FVector HitLocation;
-	if (GetSightRayHitLocation(HitLocation)) {
-	AimingComponent->AimAt(HitLocation);
+	auto resultHitLocation = GetSightRayHitLocation(HitLocation);
+	if (resultHitLocation) {
+		AimingComponent->AimAt(HitLocation);
 	}
 }
 
@@ -43,9 +44,8 @@ bool ATankPlayerController::GetSightRayHitLocation(FVector& OutHitLocation) cons
 	FVector	WorldCameraLocation;
 
 	DeprojectScreenPositionToWorld(ScreenLocation.X, ScreenLocation.Y, WorldCameraLocation, WorldLookDirection);
-	GetLookVectorHitLocation(WorldLookDirection, OutHitLocation);
-	
-	return true;
+
+	return GetLookVectorHitLocation(WorldLookDirection, OutHitLocation);
 }
 
 bool ATankPlayerController::GetLookVectorHitLocation(FVector WorldLookDirection, FVector& OutHitLocation) const {

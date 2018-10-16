@@ -20,6 +20,7 @@ private:
 	virtual void BeginPlay() override;
 	virtual void Tick(float DeltaTime) override;
 	
-	//UPROPERTY(BlueprintCallable) float AcceptanceRadius = 2000;
+protected:
+	UPROPERTY(EditDefaultsOnly, Category = "Setup") 
 	float AcceptanceRadius = 2000;
 };
