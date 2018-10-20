@@ -39,7 +39,10 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = Firing) 
 	TSubclassOf<AProjectile> ProjectileBlueprint;
 
+	UPROPERTY(EditDefaultsOnly, Category = Firing) 
 	float ReloadTime = 3;
+
+
 	double LastReloadTime = 0;
 
 	FVector AimDirection;
@@ -49,7 +52,7 @@ private:
 	virtual void TickComponent(float DeltaTime, enum ELevelTick TickType, FActorComponentTickFunction *ThisTickFunction) override;;
 	bool BarrelIsMoving();
 
-	int AmmoAmount = 5;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing") int32 AmmoAmount = 5;
 
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
@@ -60,7 +63,7 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
-	UFUNCTION(BlueprintCallable, Category = Firing) int GetCurrentAmmoAmount() const;
+	UFUNCTION(BlueprintCallable, Category = Firing) int32 GetCurrentAmmoAmount() const;
 
 	UFUNCTION(BlueprintCallable, Category = Setup) void Initialise(UTankBarrel* TankBarrelToSet, UTankTurret* TankTurretToSet);
 

@@ -118,6 +118,6 @@ bool UTankAimingComponent::BarrelIsMoving() {
 	return !AimNForwardEql;
 }
 
-int UTankAimingComponent::GetCurrentAmmoAmount() const {
+int32 UTankAimingComponent::GetCurrentAmmoAmount() const {
 	return AmmoAmount;
 }
