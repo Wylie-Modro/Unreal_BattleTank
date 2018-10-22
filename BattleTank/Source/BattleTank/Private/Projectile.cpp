@@ -2,6 +2,7 @@
 
 #include "Projectile.h" 
 #include "Runtime/Engine/Classes/Particles/ParticleSystemComponent.h"
+//#include "Public/TimerManager.h"
 #include "PhysicsEngine/RadialForceComponent.h"
 
 // Sets default values
@@ -47,9 +48,21 @@ void AProjectile::LaunchProjectile(float Speed) {
 	ProjectileMovementComponent->Activate();
 }
 
+void AProjectile::DestroyActor() {
+	if (this->IsValidLowLevel()) {
+		this->Destroy();
+	}
+}
+
+
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit) {
 	LaunchBlast->Deactivate();
 	ImpactBlast->Activate();
 	ExplosionForce->FireImpulse();
-	UE_LOG(LogTemp, Warning, TEXT("EXXXXXXX"));
+
+	SetRootComponent(ImpactBlast);
+	CollisionMesh->DestroyComponent();
+
+	FTimerHandle Timer;	
+	GetWorld()->GetTimerManager().SetTimer(Timer, this, &AProjectile::DestroyActor, DestroyDelay, false);
 }
