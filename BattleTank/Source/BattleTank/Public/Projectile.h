@@ -24,6 +24,7 @@ class BATTLETANK_API AProjectile : public AActor
 	UPROPERTY(VisibleAnywhere, Category = "Components") URadialForceComponent* ExplosionForce = nullptr;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing") float DestroyDelay = 5.0f;
+	UPROPERTY(EditDefaultsOnly, Category = "Firing") float ProjectileDamage = 20.0f;
 
 public:	
 	// Sets default values for this actor's properties

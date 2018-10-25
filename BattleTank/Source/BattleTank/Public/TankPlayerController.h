@@ -22,6 +22,11 @@ class BATTLETANK_API ATankPlayerController : public APlayerController
 	UPROPERTY(EditDefaultsOnly) float CrosshairYLocation = 0.33333f;
 	UPROPERTY(EditDefaultsOnly) float LineTraceRange = 1000000;
 
+	virtual void SetPawn(APawn* InPawn) override;
+
+	UFUNCTION()
+	void OnPlayerTankDeath();
+
 protected:
 	UFUNCTION(BlueprintImplementableEvent, Category = "Setup")
 	void FoundAimingComponent(UTankAimingComponent* TankAimCompRef);
@@ -29,5 +34,4 @@ protected:
 public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void BeginPlay() override;
-	
 };
