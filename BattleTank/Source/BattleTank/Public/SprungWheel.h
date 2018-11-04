@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/SphereComponent.h"
 #include "PhysicsEngine/PhysicsConstraintComponent.h"
 #include "SprungWheel.generated.h"
 
@@ -15,8 +16,10 @@ class BATTLETANK_API ASprungWheel : public AActor
 {
 	GENERATED_BODY()
 
-	UPROPERTY(VisibleAnywhere, Category = "Component") UStaticMeshComponent* TankWheel = nullptr;
-	UPROPERTY(VisibleAnywhere, Category = "Component") UPhysicsConstraintComponent* PhysicsConstraint = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Component") USphereComponent* TankWheel= nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Component") USphereComponent* TankAxel = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Component") UPhysicsConstraintComponent* TankToAxelConstraint = nullptr;
+	UPROPERTY(VisibleAnywhere, Category = "Component") UPhysicsConstraintComponent* AxelToWheelConstraint = nullptr;
 
 public:	
 	// Sets default values for this actor's properties
@@ -29,7 +32,4 @@ protected:
 public:	
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
-
-	
-	
 };
