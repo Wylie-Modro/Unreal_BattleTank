@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "Tank.h"
+#include "SprungWheel.h"
 
 
 // Sets default values
@@ -16,6 +17,7 @@ void ATank::BeginPlay()
 {
 	Super::BeginPlay(); // Needed for BP to run!
 	CurrentHealth = InitialHealth; // intialized here so can take value from BP
+//	UE_LOG(LogTemp, Warning, TEXT("CurrentHealth: %s"), CurrentHealth);
 }
 
 

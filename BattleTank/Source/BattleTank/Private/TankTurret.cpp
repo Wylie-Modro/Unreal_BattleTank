@@ -14,6 +14,6 @@ void UTankTurret::RotateTurret(float RelativeSpeed) {
 
 	SetRelativeRotation(FRotator(0, RawNewRotation, 0));
 
-	float Time = GetWorld()->GetTimeSeconds();
+//	float Time = GetWorld()->GetTimeSeconds();
 }
 
