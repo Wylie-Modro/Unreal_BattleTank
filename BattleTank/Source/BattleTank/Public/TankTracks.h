@@ -20,7 +20,7 @@ public:
 	TArray<class ASprungWheel*> GetWheels() const;
 
 private:
-	UPROPERTY(EditDefaultsOnly) float MaxTrackDrivingForce = 100000; //100kN 
+	UPROPERTY(EditDefaultsOnly) float MaxTrackDrivingForce = 10000000; //10000kN 
 	UTankTracks();
 	virtual void BeginPlay() override;
 

@@ -35,8 +35,6 @@ void ASprungWheel::BeginPlay()
 	auto TankActor = GetAttachParentActor();
 	if (TankActor)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Got AttachParentActor"));
-
 		TankToAxelConstraint->SetConstrainedComponents(Cast<UPrimitiveComponent>(TankActor->GetRootComponent()), NAME_None, TankAxel, NAME_None);
 		AxelToWheelConstraint->SetConstrainedComponents(TankAxel, NAME_None, TankWheel, NAME_None);
 	}
@@ -48,17 +46,13 @@ void ASprungWheel::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	if (GetWorld()->TickGroup == TG_PostPhysics) {
-		// this works in tutorial but it doesnt look like its ever being called here
 		TotalForceMagnitudeThisFrame = 0;
-		UE_LOG(LogTemp, Warning, TEXT("TG TotalForceMagnitudeThisFrame: %f"), TotalForceMagnitudeThisFrame);
 	}
 }
 
 void ASprungWheel::AddDrivingForce(float ForceMagnitude)
 {
-	UE_LOG(LogTemp, Warning, TEXT("ForceMagnitude: %f"), ForceMagnitude);
 	TotalForceMagnitudeThisFrame += ForceMagnitude;
-	UE_LOG(LogTemp, Warning, TEXT("TotalForceMagnitudeThisFrame: %f"), TotalForceMagnitudeThisFrame);
 }
 
 void ASprungWheel::ApplyForce()
