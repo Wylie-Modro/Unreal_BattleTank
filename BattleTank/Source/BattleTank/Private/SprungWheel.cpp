@@ -7,6 +7,7 @@ ASprungWheel::ASprungWheel()
 {
  	// Set this actor to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
+	PrimaryActorTick.TickGroup = TG_PostPhysics;
 
 	TankToAxelConstraint = CreateDefaultSubobject<UPhysicsConstraintComponent>(FName("TankToAxelConstraint"));
 	SetRootComponent(TankToAxelConstraint);
@@ -28,6 +29,9 @@ void ASprungWheel::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	TankWheel->SetNotifyRigidBodyCollision(true);
+	TankWheel->OnComponentHit.AddDynamic(this, &ASprungWheel::OnHit);
+
 	auto TankActor = GetAttachParentActor();
 	if (TankActor)
 	{
@@ -43,4 +47,27 @@ void ASprungWheel::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	if (GetWorld()->TickGroup == TG_PostPhysics) {
+		// this works in tutorial but it doesnt look like its ever being called here
+		TotalForceMagnitudeThisFrame = 0;
+		UE_LOG(LogTemp, Warning, TEXT("TG TotalForceMagnitudeThisFrame: %f"), TotalForceMagnitudeThisFrame);
+	}
 }
+
+void ASprungWheel::AddDrivingForce(float ForceMagnitude)
+{
+	UE_LOG(LogTemp, Warning, TEXT("ForceMagnitude: %f"), ForceMagnitude);
+	TotalForceMagnitudeThisFrame += ForceMagnitude;
+	UE_LOG(LogTemp, Warning, TEXT("TotalForceMagnitudeThisFrame: %f"), TotalForceMagnitudeThisFrame);
+}
+
+void ASprungWheel::ApplyForce()
+{
+	TankWheel->AddForce(TankAxel->GetForwardVector() * TotalForceMagnitudeThisFrame);
+}
+
+void ASprungWheel::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit)
+{
+	ApplyForce();
+}
+
